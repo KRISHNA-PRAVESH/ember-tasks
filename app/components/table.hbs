@@ -1,0 +1,57 @@
+
+
+   <div class="search-area">
+     {{input type="text" class="search-box" value=this.search_value placeholder="Search.."}}
+    <button type="button" {{on "click" this.filter}}>Search</button>
+    <button type="button" {{on "click" this.resetFilter}}>Reset</button>
+   </div>
+   
+    
+    <div class="edit-btn">
+        <button {{on 'click' this.deleteSelectedRows}} style="margin-left: 190px;">Delete</button>
+    </div>
+    
+    <div class="table">
+        
+        <table border="2" width="80%" id="data">
+            <tr class="header" id="header">
+              <th>Select</th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Profile</th>
+              <th>Department</th>
+              <th>In/out - Time</th>
+              <th >Date</th>
+            </tr>
+            {{#each this.data as |record|}}
+                <tr>
+                    {{!-- <td><input type="checkbox" {{on 'checked' record.id}}></td> --}}
+                    <td><input type="checkbox" checked={{is-selected record.id this.selectedRows}} {{action 'check' record.id}}></td>
+                    <td>{{record.id}}</td>
+                    <td>{{record.name}}</td>
+                    <td>{{record.profile}}</td>
+                    <td>{{record.department}}</td>
+                    <td>{{record.time}}</td>
+                    <td>{{record.date}}</td>
+                </tr>
+            {{/each}}
+          
+            
+            
+        </table>
+
+        <br>
+     
+        Id:{{input value=this.newData.id placeholder="Id" id='id'}} &nbsp;
+        Name: {{input value=this.newData.name}} &nbsp;
+        Profile: {{input value=this.newData.profile}}
+        Department: {{input value=this.newData.department placeholder="Department"}}
+        In/Out - Time: {{input value=this.newData.time type="time"}} &nbsp; &nbsp;
+        Date: {{input value=this.newData.date type="date"}}
+        <button type="button" {{on "click" this.update}}>Add</button>
+          
+      
+
+    </div>
+   
+    
