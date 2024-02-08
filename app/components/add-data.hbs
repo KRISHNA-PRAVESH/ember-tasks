@@ -1,0 +1,15 @@
+
+Id:{{input value=this.newData.id placeholder="Id" id='id'}} <br> <br>
+Name: {{input value=this.newData.name}} <br><br>
+Profile: 
+<PowerSelect style="width: 20%;" @options={{this.profiles}} @selected={{this.selected}}  @onChange={{this.selectProfile}} as |profile|>
+    {{profile}}
+</PowerSelect>
+<br>
+Department: {{input value=this.newData.department placeholder="Department"}}  <br><br>
+In/Out - Time: {{input value=this.newData.time type="time"}} <br><br>
+Date: {{input value=this.newData.date type="date"}} 
+
+
+<LinkTo @route="index"><button type="button" {{on "click" this.update}} {{on-key 'Enter' this.update}}>Add/Edit</button></LinkTo>
+
