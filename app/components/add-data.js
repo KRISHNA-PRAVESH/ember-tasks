@@ -3,31 +3,11 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 
-
 export default class AddDAtaComponent extends Component {
-  profiles = [
-    'Proffesor',
-    'Asst.Proffesor',
-    'Student'
-  ]
-
-  @tracked selected = 'Proffesor'
-
-  @action
-  selectProfile(profile) {
-    this.selected = profile;
-  }
-
+  
   @service dataStore;
 
-  @tracked newData = {
-    id: '',
-    name: '',
-    profile: '',
-    department: '',
-    time: '',
-    date: '',
-  };
+  @tracked formData = {};
 
   idExists(id, data) {
     var f = 0;
@@ -41,35 +21,34 @@ export default class AddDAtaComponent extends Component {
 
   @action update() {
     // console.log(this.newData);
-    this.newData.profile = this.selected;
-    var data = this.dataStore.getData();
     
-    if (this.idExists(this.newData.id, data)) {
+    let data = this.dataStore.getData();
+
+    if (this.idExists(this.formData.id, data)) {
       // console.log("Id Exists, updating")
       //updating the value
       var idx = -1;
       for (var i = 0; i < data.length; i++) {
-        if (data[i].id == this.newData.id) {
+        if (data[i].id == this.formData.id) {
           idx = i;
           break;
         }
       }
-      data[idx] = this.newData;
+      data[idx] = this.formData;
     } else {
-      this.dataStore.addData(this.newData);
+      this.dataStore.addData(this.formData);
     }
-
-    // console.log('Done');
-    this.newData = {
-      id: '',
-      name: '',
-      profile: '',
-      department: '',
-      time: '',
-      date: '',
-    };
   }
 
   
+ 
+  @action updateFormFieldValue(fieldName,event){
+    this.formData[fieldName] = event.target.value;
+  }
 
+  @action submit(){
+    console.log(this.formData);
+  }
+
+  
 }

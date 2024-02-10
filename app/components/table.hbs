@@ -11,39 +11,34 @@
         <LinkTo @route="add"><button type="button">Add</button></LinkTo>
     </div>
     
+    <button {{on 'click' this.display}}>Display</button>
     <div class="table">
-        
+     {{#if this.load}}
         <table border="2" width="80%" id="data">
             <tr class="header" id="header">
-              <th>Select</th>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Profile</th>
-              <th>Department</th>
-              <th>In/out - Time</th>
-              <th >Date</th>
-              <th></th>
+                <th>Select</th>
+                {{#each this.headers as |key|}}
+                    <th>{{key}}</th>
+                {{/each}}
+                <th></th>
             </tr>
-            {{#each @data as |record|}}
-                <tr>
-                    {{!-- <td><input type="checkbox" {{on 'checked' record.id}}></td> --}}
-                    <td><input type="checkbox" checked={{is-selected record.id this.selectedRows}} {{action 'check' record.id}}></td>
-                    <td>{{record.id}}</td>
-                    <td>{{record.name}}</td>
-                    <td>{{record.profile}}</td>
-                    <td>{{record.department}}</td>
-                    <td>{{record.time}}</td>
-                    <td>{{record.date}}</td>
-                    <td style="text-align: center;"><LinkTo @route="edit" @model={{record.id}}><button type="button">Edit</button></LinkTo></td>
-                </tr>
-            {{/each}}
-          
-            
-            
+             {{#each this.records as |record|}}
+            <tr>
+                <td><input type="checkbox" {{on 'click' (fn this.check record.[0])}}></td>
+                {{#each record as |cellValue|}}
+                 <td>{{cellValue}}</td>
+                {{/each}}
+                <td><LinkTo @route="edit" @model={{record.[0]}}><button>Edit</button></LinkTo></td>
+            </tr>
+            {{/each}}   
+           
         </table>
+        {{else}}
+          <p>Loading...</p>
 
+     {{/if}}
         <br>
-          
+
       
 
     </div>

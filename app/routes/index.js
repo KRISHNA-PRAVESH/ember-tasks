@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { computed } from '@ember/object';
 
@@ -16,24 +17,43 @@ export default class IndexRoute extends Route {
   };
 
 
+  includes(val,searchStr){
+    for(var i=0;i<val.length;i++){
+     if(typeof val[i] == 'string' && val[i].toLowerCase().indexOf(searchStr) > -1){
+       return true;
+     }
+     else if(typeof val[i]=='number'){
+       if(val[i] == searchStr) return true;
+     }
+    
+    }
+    return false;
+ }
 
-  model(params) {
+  async model(params) {
+   
+    await this.dataStore.fetchData.perform();
+    // this.isLoading = false;
     var data = this.dataStore.getData();
-    console.log(params.searchStr);
-
+    
     //if query param exist returned the data that matches the query param
     if (params.searchStr) {
-      var searchName = params.searchStr.toLowerCase();
-      var idx = -1;
-      for (var i = 0; i < data.length; i++) {
-        var currName = data[i].name.toLowerCase();
-        if (currName.indexOf(searchName) > -1) {
-          idx = i;
-          break;
-        }
-      }
-      data = [data[idx]];
-      return data;
+      // console.log(params.searchStr);
+      var searchStr = params.searchStr.toLowerCase();
+      // var match_ids = [];
+      // for (var i = 0; i < data.length; i++) {
+      //   var currName = data[i].name.toLowerCase();
+      //   if (currName.indexOf(searchName) > -1) {
+      //     match_ids.push(i+1);
+      //   }
+      // }
+
+      var filtered = data.filter((record)=>{
+        const val = Object.values(record);
+        if(this.includes(val,searchStr)) return true;
+      })
+      
+      return filtered;
     }
 
     //if not exists return the entire data

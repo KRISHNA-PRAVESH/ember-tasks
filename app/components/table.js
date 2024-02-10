@@ -10,22 +10,27 @@ export default class TableComponent extends Component {
   //Task 2
 
   @service router;
-  @tracked newData = {
-    id: '',
-    name: '',
-    profile: '',
-    department: '',
-    time: '',
-    date: '',
-  };
+
+
+  @tracked load = false;
+  @tracked headers = [];
+  @tracked records = [];
+  data = [];
+  ids = [];
 
   @tracked search_value = '';
 
-  data_backup = [];
+
+  sleep(ms = 0) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   filtered_data = [];
   @action filter() {
     // console.log(this.search_value)
+    this.load = false;
+    this.headers = [];
+    this.records = [];
     this.router.transitionTo({ queryParams: { searchStr: this.search_value } });
   }
 
@@ -36,26 +41,44 @@ export default class TableComponent extends Component {
 
   //Task 3 -> Edit and multiple delete features
 
-  @tracked selectedRows = [];
+   selectedRows = [];
 
   @action check(id) {
-    if (this.selectedRows.includes(id)) {
-      var index = this.selectedRows.indexOf(id);
-      this.selectedRows.splice(index, 1);
-      this.selectedRows = this.selectedRows;
-    } else {
-      this.selectedRows = [...this.selectedRows, id];
+    //if current id is not selected
+    if(!this.selectedRows.includes(id)){
+      this.selectedRows.push(id);
+    }else{
+      this.selectedRows = this.selectedRows.filter((val)=>{
+        if(val == id) return false;
+        else return true;
+      })
     }
-    console.log(this.selectedRows);
+  
+    // console.log(this.selectedRows);
   }
 
   @action deleteSelectedRows() {
-    this.data = this.data.filter((record) => {
-      if (this.selectedRows.includes(record.id)) return false;
-      else return true;
-    });
-    console.log(this.selectedRows);
+     this.records = this.records.filter((record)=>{
+       if(this.selectedRows.includes(record[0])) return false;
+       else return true;
+     })
   }
 
-  
+  @action display(){
+    this.data = this.args.data;
+
+    // console.log(data);
+    this.headers = Object.keys(this.data[0]);
+    // console.log(this.headers)
+ 
+    this.data.forEach((record)=>{
+      this.records.push(Object.values(record));
+      this.ids.push(record.id);
+    })
+    this.records = this.records;
+   
+    this.load = true;
+    
+    // console.log(Object.keys(this.args.data[0]));
+  }
 }
