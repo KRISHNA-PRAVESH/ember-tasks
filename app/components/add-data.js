@@ -4,8 +4,8 @@ import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 
 export default class AddDAtaComponent extends Component {
-  
   @service dataStore;
+  @service flashMessages;
 
   @tracked formData = {};
 
@@ -21,7 +21,7 @@ export default class AddDAtaComponent extends Component {
 
   @action update() {
     // console.log(this.newData);
-    
+
     let data = this.dataStore.getData();
 
     if (this.idExists(this.formData.id, data)) {
@@ -38,17 +38,23 @@ export default class AddDAtaComponent extends Component {
     } else {
       this.dataStore.addData(this.formData);
     }
+    this.flash();
   }
 
-  
- 
-  @action updateFormFieldValue(fieldName,event){
+  @action updateFormFieldValue(fieldName, event) {
     this.formData[fieldName] = event.target.value;
   }
 
-  @action submit(){
-    console.log(this.formData);
+  @action flash() {
+    this.flashMessages.success('New Data Inserted!',{
+      timeout: 1000,
+      priority: 100,
+      sticky: false,
+      showProgress: true,
+    })
   }
 
-  
+  @action submit() {
+    console.log(this.formData);
+  }
 }

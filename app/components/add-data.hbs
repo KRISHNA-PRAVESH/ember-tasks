@@ -1,4 +1,5 @@
 
+
 <br>
 <table>
   {{#each @data as |record|}}
@@ -12,7 +13,7 @@
   </tr>
   {{/each}}
 </table>
-<LinkTo @route="index"><button  {{on 'click' this.update}}>Add/Edit</button></LinkTo>
+<LinkTo @route="index"><button  type="button" {{on 'click' this.update}}>Add/Edit</button></LinkTo>
  {{!-- <LinkTo @route="index"><button type="button" {{on "click" this.update}} {{on-key 'Enter' this.update}}>Add/Edit</button></LinkTo> --}}
 
  <br><br>

@@ -1,4 +1,10 @@
+<div class="flash-msg">
+    {{#each this.flashMessages.queue as |flash|}}
+      {{flash-message flash=flash}}
+    {{/each}}
+</div>
 
+<div {{on-click-outside this.outsideClick}}>
    <div class="search-area">
      {{input type="text" class="search-box" value=this.search_value placeholder="Search.."}}
     <button type="button" {{on "click" this.filter}}>Search</button>
@@ -11,7 +17,7 @@
         <LinkTo @route="add"><button type="button">Add</button></LinkTo>
     </div>
     
-    <button {{on 'click' this.display}}>Display</button>
+    <button type="button" {{on 'click' this.display}}>Display</button>
     <div class="table">
      {{#if this.load}}
         <table border="2" width="80%" id="data">
@@ -22,15 +28,20 @@
                 {{/each}}
                 <th></th>
             </tr>
-             {{#each this.records as |record|}}
+            <VerticalCollection
+              @estimateHeight="50"
+              @items={{this.records}}
+              as |record|
+            >
             <tr>
-                <td><input type="checkbox" {{on 'click' (fn this.check record.[0])}}></td>
+                  <td><input type="checkbox" {{on 'click' (fn this.check (get record "0"))}}></td>
                 {{#each record as |cellValue|}}
                  <td>{{cellValue}}</td>
                 {{/each}}
-                <td><LinkTo @route="edit" @model={{record.[0]}}><button>Edit</button></LinkTo></td>
+                <td><LinkTo @route="edit" @model={{get record "0"}}><button type="button">Edit</button></LinkTo></td>
             </tr>
-            {{/each}}   
+              
+            </VerticalCollection> 
            
         </table>
         {{else}}
@@ -42,5 +53,6 @@
       
 
     </div>
+</div>
    
     

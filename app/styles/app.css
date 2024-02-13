@@ -21,3 +21,23 @@
 .search-area {
   margin-left: 80px;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.nav-bar {
+  background-color: beige;
+  padding: 30px;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.hide-element {
+  display: none;
+}
+
+.flash-msg{
+  margin-left: 500px;
+}

@@ -1,5 +1,7 @@
 
-<Table @data = {{@model}}/>
+<Table @data = {{@model.data}}/>
+
+<ToElsewhere @named="top" @send={{ component "top-bar" title=this.model.title }} />
 
 
 

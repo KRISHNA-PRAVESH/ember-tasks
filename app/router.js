@@ -10,4 +10,5 @@ Router.map(function () {
   this.route('index', { path: '/list' });
   this.route('add');
   this.route('edit', { path: '/edit/:id' });
+  this.route('scroll');
 });

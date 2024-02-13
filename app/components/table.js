@@ -10,7 +10,7 @@ export default class TableComponent extends Component {
   //Task 2
 
   @service router;
-
+  @service flashMessages;
 
   @tracked load = false;
   @tracked headers = [];
@@ -20,9 +20,8 @@ export default class TableComponent extends Component {
 
   @tracked search_value = '';
 
-
   sleep(ms = 0) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   filtered_data = [];
@@ -41,44 +40,48 @@ export default class TableComponent extends Component {
 
   //Task 3 -> Edit and multiple delete features
 
-   selectedRows = [];
+  selectedRows = [];
 
   @action check(id) {
     //if current id is not selected
-    if(!this.selectedRows.includes(id)){
+    if (!this.selectedRows.includes(id)) {
       this.selectedRows.push(id);
-    }else{
-      this.selectedRows = this.selectedRows.filter((val)=>{
-        if(val == id) return false;
+    } else {
+      this.selectedRows = this.selectedRows.filter((val) => {
+        if (val == id) return false;
         else return true;
-      })
+      });
     }
-  
+
     // console.log(this.selectedRows);
   }
 
   @action deleteSelectedRows() {
-     this.records = this.records.filter((record)=>{
-       if(this.selectedRows.includes(record[0])) return false;
-       else return true;
-     })
+    this.records = this.records.filter((record) => {
+      if (this.selectedRows.includes(record[0])) return false;
+      else return true;
+    });
   }
 
-  @action display(){
+  @action display() {
     this.data = this.args.data;
 
     // console.log(data);
     this.headers = Object.keys(this.data[0]);
     // console.log(this.headers)
- 
-    this.data.forEach((record)=>{
+
+    this.data.forEach((record) => {
       this.records.push(Object.values(record));
       this.ids.push(record.id);
-    })
+    });
     this.records = this.records;
-   
+
     this.load = true;
-    
+
     // console.log(Object.keys(this.args.data[0]));
+  }
+
+  @action outsideClick() {
+    if (!this.load) this.display();
   }
 }

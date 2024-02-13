@@ -16,26 +16,25 @@ export default class IndexRoute extends Route {
     },
   };
 
-
-  includes(val,searchStr){
-    for(var i=0;i<val.length;i++){
-     if(typeof val[i] == 'string' && val[i].toLowerCase().indexOf(searchStr) > -1){
-       return true;
-     }
-     else if(typeof val[i]=='number'){
-       if(val[i] == searchStr) return true;
-     }
-    
+  includes(val, searchStr) {
+    for (var i = 0; i < val.length; i++) {
+      if (
+        typeof val[i] == 'string' &&
+        val[i].toLowerCase().indexOf(searchStr) > -1
+      ) {
+        return true;
+      } else if (typeof val[i] == 'number') {
+        if (val[i] == searchStr) return true;
+      }
     }
     return false;
- }
+  }
 
   async model(params) {
-   
     await this.dataStore.fetchData.perform();
     // this.isLoading = false;
     var data = this.dataStore.getData();
-    
+
     //if query param exist returned the data that matches the query param
     if (params.searchStr) {
       // console.log(params.searchStr);
@@ -48,15 +47,15 @@ export default class IndexRoute extends Route {
       //   }
       // }
 
-      var filtered = data.filter((record)=>{
+      var filtered = data.filter((record) => {
         const val = Object.values(record);
-        if(this.includes(val,searchStr)) return true;
-      })
-      
-      return filtered;
+        if (this.includes(val, searchStr)) return true;
+      });
+
+      return { data: filtered, title: 'Display Page' };
     }
 
     //if not exists return the entire data
-    return data;
+    return { data, title: 'Display Page' };
   }
 }

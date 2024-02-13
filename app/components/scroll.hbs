@@ -1,0 +1,54 @@
+{{!-- <VerticalCollection
+  @items={{this.items}}
+  @estimateHeight={{50}}
+  @renderFirst={{10}}
+  @renderFromLast={{5}} 
+  @renderAll={{false}}
+  @onBottom={{this.loadMore}} 
+  as |item index|
+>
+
+ <li>
+    {{item.id}} - {{index}}
+ </li>
+</VerticalCollection> --}}
+
+
+
+
+<button type="button" {{on 'click' this.flash}}>Flash Message</button>
+{{!-- <div {{on-click-outside this.outsideClick}}>
+  <button>click outside..</button>
+</div> --}}
+
+
+<div {{did-insert}}>
+  This is a div
+</div>
+
+<VerticalCollection
+  @estimateHeight="50"
+   @items={{this.items}}
+   @onScrolledToBottom={{this.loadMore}}
+   as |item index|
+>
+<li>{{item.name}} - {{item.id}} - Index: {{index}}</li>
+</VerticalCollection>
+
+{{!-- {{#vertical-collection
+  items=this.items
+  renderFromIndex=0
+  renderToIndex=this.totalRenderCount
+  as |item index|
+}}
+  <div class="item">
+    {{item.name}}
+  </div>
+{{/vertical-collection}} --}}
+<button type="button" {{scroll-top}}>Scroll to Top</button>
+
+
+In the above code loadBelow action is called immediately even when I didn't scrolled to the bottom of the page
+
+
+

@@ -1,1 +1,2 @@
-<AddData @data={{@model}}></AddData>
+<AddData @data={{@model.keys}}></AddData>
+<ToElsewhere @named="top" @send={{ component "top-bar" title=this.model.title }} />
