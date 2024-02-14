@@ -1,0 +1,14 @@
+
+<table>
+  {{#each @data as |record|}}
+  <tr>
+    <td>
+      <p style="display: inline;">{{record}}: </p> 
+    </td>
+    <td>
+      <input type="text" value={{this.formData.record}}  {{on "input" (fn this.updateFormFieldValue record)}}>
+    </td>
+  </tr>
+  {{/each}}
+</table>
+<LinkTo @route="index"><button  type="button" {{on 'click' this.update}}>Add/Edit</button></LinkTo>

@@ -1,0 +1,43 @@
+/* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+.table {
+    margin-left: 70px;
+    margin-top: 30px;
+  }
+  
+  .search-box {
+    margin-left: 70px;
+    margin-top: 50px;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  .edit-btn {
+    display: inline;
+    margin-left: 900px;
+  }
+  
+  .search-area {
+    margin-left: 80px;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-bar {
+    background-color: beige;
+    padding: 30px;
+    overflow: hidden;
+    margin-top: 0;
+  }
+  
+  .hide-element {
+    display: none;
+  }
+  
+  .flash-msg{
+    margin-left: 500px;
+  }
