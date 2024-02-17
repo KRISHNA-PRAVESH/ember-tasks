@@ -31,10 +31,10 @@ export default class IndexRoute extends Route {
   }
 
   async model(params) {
-    await this.dataStore.fetchData.perform();
+    
     // this.isLoading = false;
-    var data = this.dataStore.getData();
-
+    var data = await this.dataStore.getData();
+  
     //if query param exist returned the data that matches the query param
     if (params.searchStr) {
       // console.log(params.searchStr);

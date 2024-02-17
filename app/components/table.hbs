@@ -18,14 +18,18 @@
     </div>
     
     <button type="button" {{on 'click' this.display}}>Display</button>
+   
     <div class="table">
-     {{#if this.load}}
+       {{#if this.load}}
         <table border="2" width="80%" id="data">
             <tr class="header" id="header">
                 <th>Select</th>
-                {{#each this.headers as |key|}}
-                    <th>{{key}}</th>
-                {{/each}}
+                <th>Id</th>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Mobile</th>
                 <th></th>
             </tr>
             <VerticalCollection
@@ -33,26 +37,27 @@
               @items={{this.records}}
               as |record|
             >
-            <tr>
-                  <td><input type="checkbox" {{on 'click' (fn this.check (get record "0"))}}></td>
-                {{#each record as |cellValue|}}
-                 <td>{{cellValue}}</td>
-                {{/each}}
-                <td><LinkTo @route="edit" @model={{get record "0"}}><button type="button">Edit</button></LinkTo></td>
+            <tr class="row">
+                  <td><input type="checkbox" {{on 'click' (fn this.check record.id)}} checked={{false}}></td>
+                  <td>{{record.id}}</td>
+                  <td>{{record.name}}</td>
+                  <td>{{record.dob}}</td>
+                  <td>{{record.age}}</td>
+                  <td>{{record.gender}}</td>
+                  <td>{{record.mobile}}</td>
+                <td><LinkTo @route="edit" @model={{record.id}}><button type="button">Edit</button></LinkTo></td>
             </tr>
               
             </VerticalCollection> 
            
         </table>
-        {{else}}
-          <p>Loading...</p>
-
-     {{/if}}
+         {{else}}
+           <p>Loading...</p>
+         {{/if}}
         <br>
 
-      
-
     </div>
+   
 </div>
    
     

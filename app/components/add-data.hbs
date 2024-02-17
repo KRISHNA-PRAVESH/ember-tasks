@@ -1,8 +1,12 @@
 
-
+{{#each-in @data.data as |key old_data|}}
+  <p class="line key">{{key}}</p>-<p class="line">{{old_data}}</p> &nbsp;
+{{/each-in}}
+<br>
+<br>
 <br>
 <table>
-  {{#each @data as |record|}}
+  {{#each @data.keys as |record|}}  
   <tr>
     <td>
       <p style="display: inline;">{{record}}: </p> 
@@ -13,10 +17,10 @@
   </tr>
   {{/each}}
 </table>
-<LinkTo @route="index"><button  type="button" {{on 'click' this.update}}>Add/Edit</button></LinkTo>
+<button  type="button" {{on 'click' this.update}}>Add/Edit</button>
  {{!-- <LinkTo @route="index"><button type="button" {{on "click" this.update}} {{on-key 'Enter' this.update}}>Add/Edit</button></LinkTo> --}}
 
  <br><br>
-
+<button {{on 'click' this.submit}}>click</button>
 
 

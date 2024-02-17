@@ -11,6 +11,7 @@ export default class TableComponent extends Component {
 
   @service router;
   @service flashMessages;
+  @service dataStore;
 
   @tracked load = false;
   @tracked headers = [];
@@ -18,7 +19,7 @@ export default class TableComponent extends Component {
   data = [];
   ids = [];
 
-  @tracked search_value = '';
+  // @tracked search_value = '';
 
   sleep(ms = 0) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -43,6 +44,7 @@ export default class TableComponent extends Component {
   selectedRows = [];
 
   @action check(id) {
+  
     //if current id is not selected
     if (!this.selectedRows.includes(id)) {
       this.selectedRows.push(id);
@@ -52,33 +54,27 @@ export default class TableComponent extends Component {
         else return true;
       });
     }
-
+    console.log("checked: ",this.selectedRows);
     // console.log(this.selectedRows);
   }
 
-  @action deleteSelectedRows() {
-    this.records = this.records.filter((record) => {
-      if (this.selectedRows.includes(record[0])) return false;
-      else return true;
-    });
+  @action isChecked(id){
+    console.log("here:",id)
+  }
+
+ 
+
+  @action async deleteSelectedRows() {
+    // console.log(this.selectedRows);
+    await this.dataStore.deleteRows(this.selectedRows);
+    this.records = await this.dataStore.getData();
+    
   }
 
   @action display() {
-    this.data = this.args.data;
-
-    // console.log(data);
-    this.headers = Object.keys(this.data[0]);
-    // console.log(this.headers)
-
-    this.data.forEach((record) => {
-      this.records.push(Object.values(record));
-      this.ids.push(record.id);
-    });
-    this.records = this.records;
+    this.records = this.args.data;
 
     this.load = true;
-
-    // console.log(Object.keys(this.args.data[0]));
   }
 
   @action outsideClick() {

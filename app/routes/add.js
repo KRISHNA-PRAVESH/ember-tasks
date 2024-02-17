@@ -3,9 +3,9 @@ import { service } from '@ember/service';
 
 export default class AddRoute extends Route {
   @service dataStore;
-  model() {
-    let data = this.dataStore.getData();
+  async model() {
+    let data = await this.dataStore.getData();
     let keys = Object.keys(data[0]);
-    return { keys, title: 'Add Page' };
+    return { keys, title: 'Add Page',isEdit:false };
   }
 }

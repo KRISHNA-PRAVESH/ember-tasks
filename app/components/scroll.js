@@ -182,7 +182,7 @@ export default class ScrollComponent extends Component {
   }
 
   @action flash() {
-    this.flashMessages.success('Sucess!',{
+    this.flashMessages.success('Sucess!', {
       timeout: 100,
       priority: 100,
       sticky: false,

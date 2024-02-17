@@ -38,6 +38,17 @@
   display: none;
 }
 
-.flash-msg{
+.flash-msg {
   margin-left: 500px;
+}
+
+.row{
+  text-align: center;
+}
+
+.line{
+  display: inline;
+}
+.key{
+  font-weight: bold;
 }
